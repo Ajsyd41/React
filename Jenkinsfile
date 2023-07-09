@@ -26,6 +26,15 @@ pipeline
             junit 'coverage/junit.xml'
           }
         }
+  
+   stage('Sonarqube') {
+
+      def scannerHome = tool 'sonarqube';
+
+     withSonarQubeEnv('sonarqube'){
+       bat "${scannerHome}/bin/sonar-scanner"          
+     }
+   }
     stage('Delete Project Files') {
       steps {
         cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
