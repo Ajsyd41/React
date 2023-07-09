@@ -32,9 +32,9 @@ pipeline
       def scannerHome = tool 'sonarqube_scanner';
       }
       steps{
-          withSonarQubeEnv('sonar_api'){
-             bat "${scannerHome}/bin/sonar-scanner"          
-        }
+         withSonarQubeEnv() {
+          bat "${scannerHome}/bin/sonar-scanner"
+       }
       }
    }
 
