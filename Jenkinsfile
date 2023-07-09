@@ -32,7 +32,7 @@ pipeline
         script {
           scannerHome = tool 'sonarqube_scanner'
         }
-        withSonarQubeEnv() {
+        withSonarQubeEnv('sonar-api') {
           bat "${scannerHome}/bin/sonar-scanner"
         }
       }
