@@ -27,16 +27,16 @@ pipeline
           }
         }
   
-   stage('Sonarqube') {
-    
-      def scannerHome = tool 'sonarqube_scanner';
-  
-      steps{
-         withSonarQubeEnv() {
+    stage('SonarQube analysis') {
+      steps {
+        script {
+          scannerHome = tool 'sonarqube_scanner'
+        }
+        withSonarQubeEnv() {
           bat "${scannerHome}/bin/sonar-scanner"
-       }
+        }
       }
-   }
+    }
 
     stage('Delete Project Files') {
       steps {
