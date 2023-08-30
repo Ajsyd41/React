@@ -8,14 +8,7 @@ pipeline
       }
 	  
   stages {
-    stage('Preflight') {
-      steps {
-       sh 'node -v'
-       sh 'npm --version'
-       sh 'git log --reverse -1'
-      }
-    }
-
+  
     stage('Build') {
       steps {
        sh 'npm install'
