@@ -3,7 +3,7 @@ pipeline
     agent {
           docker {
             image 'node:18.17.1-alpine3.18'
-            args '-p 3000:3000'
+            args '-p 3000:3000 -u 0:0'
 			reuseNode true
         }
 	}      
@@ -12,7 +12,6 @@ pipeline
     stage('Build') {
       steps {
         script{
-			sh 'chown -R $USER ~/.npm'
 			sh 'npm install'
         }
       }
