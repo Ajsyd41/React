@@ -2,7 +2,7 @@ pipeline
  {
     agent {
           docker {
-                  image '18-buster-slim'
+                  image 'node:18-buster-slim'
                   reuseNode true
          }
       }
