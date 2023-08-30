@@ -25,7 +25,7 @@ pipeline
 		
 	 stage('Sonar Analysis'){
         steps{
-             withSonarQubeEnv('sonarqube-demo') {
+             withSonarQubeEnv('sonarqube-scanner') {
                 sh 'npx sonarqube-scanner'
             }
         
