@@ -12,7 +12,7 @@ pipeline
     stage('Build') {
       steps {
         script{
-			sh 'chown -R $USER:$GROUP ~/.npm'
+			sh 'chown -R $USER ~/.npm'
 			sh 'npm install'
         }
       }
