@@ -12,8 +12,8 @@ pipeline
     stage('Build') {
       steps {
         script{
-	    sh 'chown -R $USER /usr/local/lib/node_modules'
-      sh 'npm install'
+			sh 'chown -R $USER:$GROUP ~/.npm'
+			sh 'npm install'
         }
       }
     }
