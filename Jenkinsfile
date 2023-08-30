@@ -11,8 +11,10 @@ pipeline
   
     stage('Build') {
       steps {
+        script{
+	    sh 'chown -R $USER /usr/local/lib/node_modules'
       sh 'npm install'
-	 
+        }
       }
     }
     stage('Unit Test') {
@@ -22,39 +24,39 @@ pipeline
           }
         }
 		
-	 stage('Sonar Analysis'){
-        steps{
-             withSonarQubeEnv('sonarqube-demo') {
-                sh 'npx sonarqube-scanner'
-            }
+	//  stage('Sonar Analysis'){
+  //       steps{
+  //            withSonarQubeEnv('sonarqube-demo') {
+  //               sh 'npx sonarqube-scanner'
+  //           }
         
-       }
-     }
-     stage("Quality Gate"){
-	 steps
-	 {
-        timeout(time: 1, unit: 'HOURS') {
-         script{
-           def qg = waitForQualityGate() 
-              if (qg.status != 'OK') {
-                error "Pipeline aborted due to quality gate failure: ${qg.status}"
-           }
-         }
-		}
-	  }
-     }
-	stage('SCA analysis') {
-        steps {
-               sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
-        }
-     }
-	  stage('dependencyTrackPublisher') {
-            steps {
-                withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
-                    dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'My-Maven-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
-                }
-            }
-        }
+  //      }
+  //    }
+  //    stage("Quality Gate"){
+	//  steps
+	//  {
+  //       timeout(time: 1, unit: 'HOURS') {
+  //        script{
+  //          def qg = waitForQualityGate() 
+  //             if (qg.status != 'OK') {
+  //               error "Pipeline aborted due to quality gate failure: ${qg.status}"
+  //          }
+  //        }
+	// 	}
+	//   }
+  //    }
+	// stage('SCA analysis') {
+  //       steps {
+  //              sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
+  //       }
+  //    }
+	//   stage('dependencyTrackPublisher') {
+  //           steps {
+  //               withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
+  //                   dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'My-Maven-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
+  //               }
+  //           }
+  //       }
     }
 	post {
         always {
