@@ -2,17 +2,17 @@ pipeline
  {
     agent {
           docker {
-                  image 'node:16-alpine'
-                  reuseNode true
-         }
-      }
-	  
+            image 'node:18.17.1-alpine3.18'
+            args '-p 3000:3000'
+			reuseNode true
+        }
+	}      
   stages {
   
     stage('Build') {
       steps {
-	   sh 'npm cache clean --force'
-       sh 'npm i'
+      sh 'npm install'
+	 
       }
     }
     stage('Unit Test') {
