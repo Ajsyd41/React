@@ -11,12 +11,12 @@ pipeline
   
     stage('Build') {
       steps {
-       sh 'npm install'
+       sh 'npx i'
       }
     }
     stage('Unit Test') {
           steps {
-           sh 'npm run test'
+           sh 'npx run test'
             junit 'coverage/junit.xml'
           }
         }
