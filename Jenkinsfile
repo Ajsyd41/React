@@ -11,13 +11,13 @@ pipeline
   
     stage('Build') {
       steps {
-	   sh 'sudo npm cache clean --force'
-       sh 'npx i'
+	   sh 'npm cache clean --force'
+       sh 'npm i'
       }
     }
     stage('Unit Test') {
           steps {
-           sh 'npx run test'
+           sh 'npm run test'
             junit 'coverage/junit.xml'
           }
         }
