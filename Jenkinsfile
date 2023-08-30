@@ -21,17 +21,14 @@ pipeline
             junit 'coverage/junit.xml'
           }
         }
-	 stage('Sonar Analysis')
-     {
-        steps
-        {
-            script
-            {
+		
+	 stage('Sonar Analysis'){
+        steps{
              withSonarQubeEnv('sonarqube-demo') {
                 sh 'npx sonarqube-scanner'
             }
-        }
-     }
+        
+       }
      }
      stage("Quality Gate"){
 	 steps
