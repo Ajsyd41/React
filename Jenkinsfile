@@ -1,35 +1,75 @@
 pipeline
  {
-  agent any
-
-  tools {
-    nodejs 'NodeJS'
-  }
-
+    agent {
+          docker {
+                  image '18-buster-slim'
+                  reuseNode true
+         }
+      }
+	  
   stages {
     stage('Preflight') {
       steps {
-       bat 'node -v'
-       bat 'npm --version'
-       bat 'git log --reverse -1'
+       sh 'node -v'
+       sh 'npm --version'
+       sh 'git log --reverse -1'
       }
     }
 
     stage('Build') {
       steps {
-       bat 'npm install'
+       sh 'npm install'
       }
     }
     stage('Unit Test') {
           steps {
-           bat 'npm run test'
+           sh 'npm run test'
             junit 'coverage/junit.xml'
           }
         }
-    stage('Delete Project Files') {
-      steps {
-        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
-      }
+	 stage('Sonar Analysis')
+     {
+        steps
+        {
+            script
+            {
+             withSonarQubeEnv('sonarqube-demo') {
+                sh 'npx sonarqube-scanner'
+            }
+        }
+     }
+     }
+     stage("Quality Gate"){
+	 steps
+	 {
+        timeout(time: 1, unit: 'HOURS') {
+         script{
+           def qg = waitForQualityGate() 
+              if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+           }
+         }
+		}
+	  }
+     }
+	stage('SCA analysis') {
+        steps {
+               sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
+        }
+     }
+	  stage('dependencyTrackPublisher') {
+            steps {
+                withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
+                    dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'My-Maven-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
+                }
+            }
+        }
     }
-  }
-}
+	post {
+        always {
+            cleanWs()
+        }
+    }
+}  
+		 
+    
