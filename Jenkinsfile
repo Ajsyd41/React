@@ -11,6 +11,7 @@ pipeline
   
     stage('Build') {
       steps {
+	   sh 'sudo npm cache clean --force'
        sh 'npx i'
       }
     }
