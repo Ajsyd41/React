@@ -2,18 +2,12 @@ pipeline
  {
     agent {
           docker {
-                  image 'node:18-buster-slim'
+                  image 'node:16-alpine'
                   reuseNode true
          }
       }
 	  
   stages {
-     stage('SCM Checkout'){
-        steps{
-
-            checkout scm
-        }
-     }
   
     stage('Build') {
       steps {
