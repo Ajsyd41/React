@@ -8,10 +8,15 @@ pipeline
       }
 	  
   stages {
+     stage('SCM Checkout'){
+        steps{
+
+            checkout scm
+        }
+     }
   
     stage('Build') {
       steps {
-	  sh ' sudo chown -R 115:122 "/.npm"'
        sh 'npm install'
       }
     }
