@@ -23,27 +23,27 @@ pipeline
           }
         }
 		
-	//  stage('Sonar Analysis'){
-  //       steps{
-  //            withSonarQubeEnv('sonarqube-demo') {
-  //               sh 'npx sonarqube-scanner'
-  //           }
+	 stage('Sonar Analysis'){
+        steps{
+             withSonarQubeEnv('sonarqube-demo') {
+                sh 'npx sonarqube-scanner'
+            }
         
-  //      }
-  //    }
-  //    stage("Quality Gate"){
-	//  steps
-	//  {
-  //       timeout(time: 1, unit: 'HOURS') {
-  //        script{
-  //          def qg = waitForQualityGate() 
-  //             if (qg.status != 'OK') {
-  //               error "Pipeline aborted due to quality gate failure: ${qg.status}"
-  //          }
-  //        }
-	// 	}
-	//   }
-  //    }
+       }
+     }
+     stage("Quality Gate"){
+	 steps
+	 {
+        timeout(time: 1, unit: 'HOURS') {
+         script{
+           def qg = waitForQualityGate() 
+              if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+           }
+         }
+		}
+	  }
+ }
 	// stage('SCA analysis') {
   //       steps {
   //              sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
