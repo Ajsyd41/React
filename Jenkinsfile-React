@@ -22,16 +22,15 @@ pipeline
           }
         }
 		
-	 stage('Sonar Analysis'){
-        steps{
-          script{
-             withSonarQubeEnv('sonarqube-demo') {
-              sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' "/root/.sonar/native-sonar-scanner/$(ls -1tr /root/.sonar/native-sonar-scanner/ | head -1)/bin/sonar-scanner"
-              sh 'npx sonarqube-scanner'
-             }
-          }
-       }
-     }
+	//  stage('Sonar Analysis'){
+  //       steps{
+  //         script{
+  //            withSonarQubeEnv('sonarqube-demo') {
+  //             sh 'npx sonarqube-scanner'
+  //            }
+  //         }
+  //      }
+  //    }
 //      stage("Quality Gate"){
 // 	 steps
 // 	 {
@@ -45,18 +44,18 @@ pipeline
 // 	  	}
 // 	  }
 //  }
-	// stage('SCA analysis') {
-  //       steps {
-  //              sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
-  //       }
-  //    }
-	//   stage('dependencyTrackPublisher') {
-  //           steps {
-  //               withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
-  //                   dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'My-Maven-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
-  //               }
-  //           }
-  //       }
+	stage('SCA analysis') {
+        steps {
+               sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
+        }
+     }
+	  stage('dependencyTrackPublisher') {
+            steps {
+                withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
+                    dependencyTrackPublisher artifact: 'src/bom.xml', projectName: 'My-React-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
+                }
+            }
+        }
     }
 }  
 		 
