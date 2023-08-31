@@ -6,7 +6,7 @@ pipeline
             args '-p 3000:3000 -u 0:0'
 			      reuseNode true
         }
-	}      
+	  }      
   stages {
   
     stage('Build') {
@@ -57,11 +57,6 @@ pipeline
   //               }
   //           }
   //       }
-    }
-	post {
-        always {
-            cleanWs()
-        }
     }
 }  
 		 
