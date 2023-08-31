@@ -26,8 +26,8 @@ pipeline
         steps{
           script{
              withSonarQubeEnv('sonarqube-demo') {
-                // sh 'npx sonarqube-scanner'
-                 sh "sudo ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner"
+              sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' "/root/.sonar/native-sonar-scanner/$(ls -1tr /root/.sonar/native-sonar-scanner/ | head -1)/bin/sonar-scanner"
+              sh 'npx sonarqube-scanner'
              }
           }
        }
