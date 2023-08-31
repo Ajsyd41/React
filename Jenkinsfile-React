@@ -3,7 +3,7 @@ pipeline
     agent {
           docker {
             image 'node:18.17.1-alpine3.18 '
-            args '-p 3000:3000 -u 0:0 -v /var/lib/jenkins/workspace/Docker-React/node-modules:/temp/'
+            args '-p 3000:3000 -u 0:0 -v /var/lib/jenkins/workspace/Docker-React/node-modules:/tmp/'
 			reuseNode true
         }
 	}      
@@ -27,7 +27,7 @@ pipeline
           script{
              withSonarQubeEnv('sonarqube-demo') {
                 // sh 'npx sonarqube-scanner'
-                 sh "/temp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner"
+                 sh "./tmp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner"
              }
           }
        }
