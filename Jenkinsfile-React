@@ -26,8 +26,8 @@ pipeline
         steps{
           script{
              withSonarQubeEnv('sonarqube-demo') {
-                sh 'npx sonarqube-scanner'
-                //  sh "./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner"
+                // sh 'npx sonarqube-scanner'
+                 sh "sudo ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner"
              }
           }
        }
