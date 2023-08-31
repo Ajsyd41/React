@@ -25,7 +25,7 @@ pipeline
 	 stage('Sonar Analysis'){
         steps{
           script{
-            sh 'su ls -al /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/ | grep java'
+            sh 'su ls -la /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/ | grep java'
             sh 'su rm /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/java'
             sh 'su ln -s /usr/bin/java /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/java'
 
