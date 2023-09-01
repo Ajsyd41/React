@@ -1,15 +1,17 @@
 pipeline
  {
-    agent {
+   agent none   
+
+
+  stages {
+    stage('Build') {
+      agent {
           docker {
             image 'node:18.17.1-alpine3.18'
             args '-p 3000:3000 -u 0:0 --privileged'
 			      reuseNode true
         }
-	  }      
-  stages {
-  
-    stage('Build') {
+	  }   
       steps {
         script{
 			sh 'npm install'
@@ -17,6 +19,13 @@ pipeline
       }
     }
     stage('Unit Test') {
+        agent {
+          docker {
+            image 'node:18.17.1-alpine3.18'
+            args '-p 3000:3000 -u 0:0 --privileged'
+			      reuseNode true
+        }
+	  }  
           steps {
            sh 'npm run test'
           }
@@ -24,18 +33,13 @@ pipeline
 		
 	 stage('Sonar Analysis'){
           agent {
-          docker {  image 'sonarqube:latest'
-                    args '-u 0:0 --privileged'
-          }
-          }
+            docker {  image 'sonarqube:latest'
+                      args '-u 0:0 '
+                }
+             }
      
         steps{
           script{
-
-            // sh 'doas ls -l /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/ | grep java'
-            // sh 'doas rm /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/java'
-            // sh 'doas ln -s /usr/bin/java /root/.sonar/native-sonar-scanner/sonar-scanner-3.2.0.1227-linux/jre/bin/java'
-
             echo '=========================================================================================='
              withSonarQubeEnv('sonarqube-demo') {
               sh 'npx sonarqube-scanner'
