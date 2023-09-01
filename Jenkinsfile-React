@@ -1,43 +1,28 @@
 pipeline
  {
-   agent none   
-
-
-  stages {
-    stage('Build') {
-      agent {
+   agent {
           docker {
-            image 'node:18.17.1-alpine3.18'
+            image 'timbru31/java-node:17-jre-18'
             args '-p 3000:3000 -u 0:0 --privileged'
 			      reuseNode true
         }
-	  }   
+   }
+
+  stages { 
       steps {
-        script{
-			sh 'npm install'
+         script{
+		    	sh 'npm install'
         }
       }
     }
     stage('Unit Test') {
-        agent {
-          docker {
-            image 'node:18.17.1-alpine3.18'
-            args '-p 3000:3000 -u 0:0 --privileged'
-			      reuseNode true
-        }
-	  }  
+
           steps {
            sh 'npm run test'
           }
         }
 		
 	 stage('Sonar Analysis'){
-          agent {
-            docker {  image 'sonarqube:latest'
-                      args '-u 0:0 '
-                }
-             }
-     
         steps{
           script{
             echo '=========================================================================================='
