@@ -23,6 +23,12 @@ pipeline
         }
 		
 	 stage('Sonar Analysis'){
+          agent {
+          docker {  image 'sonarqube:latest'
+                    args '-u 0:0 --privileged'
+          }
+          }
+     
         steps{
           script{
 
