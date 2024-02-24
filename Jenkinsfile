@@ -39,7 +39,7 @@ pipeline
 
       stage('S3 Upload') {
           steps {
-           sh 'aws deploy push --application-name my-devsecops-test --s3-location s3://codedeploybucketnew.zip --source ./build'
+           sh "aws deploy push --application-name my-devsecops-test --s3-location s3://codedeploybucketnew/${BUILD_NUMBER}.zip --source ./build"
           }
         }
 		
