@@ -25,7 +25,7 @@ pipeline
     {
       steps {
          script{
-		       build 'AutoTriggerBuildJob'
+		       build job: 'AutoTriggerBuildJob', parameters: [string(name: 'WORKSPACE', value: '{env.WORKSPACE}')]
         }
       }
     }
