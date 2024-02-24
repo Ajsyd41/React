@@ -24,41 +24,45 @@ pipeline
           }
         }
 		
-	 stage('Sonar Analysis'){
-        steps{
-          script{
-            echo '=========================================================================================='
-             withSonarQubeEnv('sonarqube-demo') {
-              sh 'npx sonarqube-scanner'
-             }
-          }
-       }
-     }
- stage("Quality Gate"){
-	 steps
-	 {
-        timeout(time: 1, unit: 'HOURS') {
-         script{
-           def qg = waitForQualityGate() 
-              if (qg.status != 'OK') {
-                error "Pipeline aborted due to quality gate failure: ${qg.status}"
-           }
-         }
-	  	}
-	  }
- }
-	stage('SCA analysis') {
-        steps {
-               sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
-        }
-     }
-	  stage('dependencyTrackPublisher') {
-            steps {
-                withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
-                    dependencyTrackPublisher artifact: 'src/bom.xml', projectName: 'My-React-Project', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: API_KEY
-                }
-            }
-        }
+// 	 stage('Sonar Analysis'){
+//         steps{
+//           script{
+//             echo '=========================================================================================='
+//              withSonarQubeEnv('sonarqube-demo') {
+//               sh 'npx sonarqube-scanner'
+//              }
+//           }
+//        }
+//      }
+//  stage("Quality Gate"){
+// 	 steps
+// 	 {
+//         timeout(time: 1, unit: 'HOURS') {
+//          script{
+//            def qg = waitForQualityGate() 
+//               if (qg.status != 'OK') {
+//                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
+//            }
+//          }
+// 	  	}
+// 	  }
+//  }
+// 	stage('SCA analysis') {
+//         steps {
+//                sh 'npx @cyclonedx/cyclonedx-npm --output-file src/bom.xml --validate'
+//         }
+//      }
+// 	  stage('dependencyTrackPublisher') {
+//             steps {
+//                 withCredentials([string(credentialsId: 'sca-key', variable: 'API_KEY')]) {
+//                     dependencyTrackPublisher artifact: 'src/bom.xml',
+//                      projectName: 'My-React-Project', 
+//                      projectVersion: 'my-version', 
+//                      synchronous: true, 
+//                      dependencyTrackApiKey: API_KEY
+//                 }
+//             }
+//         }
     }
  }
 

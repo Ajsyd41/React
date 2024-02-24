@@ -1,1 +1,0 @@
-Sample Jest+Enzyme Widget

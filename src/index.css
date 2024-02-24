@@ -1,17 +1,13 @@
 body {
-    background-image: url('https://images.freeimages.com/images/large-previews/948/bitcoin-1056983.jpg');
-    text-align: center;
-    padding:  5%;
-    font-size: 18px;
-    color: snow;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
- button {
-     margin-left: 5px;
- }
 
- button, input {
-     border: 2px solid black;
-     border-radius: 2px;
-     background-color: wheat;
- }
-
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
