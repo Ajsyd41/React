@@ -23,7 +23,7 @@ pipeline
     {
       steps {
          script{
-		       build 'anotherjob'
+		       build 'AutoTriggerBuildJob'
         }
       }
     }
