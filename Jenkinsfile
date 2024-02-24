@@ -37,7 +37,7 @@ pipeline
           }
         }
 
-      stage('Npm Build') {
+      stage('S3 Upload') {
           steps {
            sh 'aws deploy push --application-name my-devsecops-test --s3-location s3://codedeploybucketnew.zip --source ./build'
           }
