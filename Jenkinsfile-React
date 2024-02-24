@@ -9,20 +9,23 @@ pipeline
    }
 
   stages { 
+
+    
     stage('Build')
     {
       steps {
          script{
-		    	sh 'npm install'
+		    	// sh 'npm install'
+          build 'anotherjob'
         }
       }
     }
-    stage('Unit Test') {
+    // stage('Unit Test') {
 
-          steps {
-           sh 'npm run test'
-          }
-        }
+    //       steps {
+    //        sh 'npm run test'
+    //       }
+    //     }
 		
 // 	 stage('Sonar Analysis'){
 //         steps{

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-mkdir /home/ubuntu/nodejs
-cd /home/ubuntu/nodejs
+cd /var/www/html
 
 sudo npm install
