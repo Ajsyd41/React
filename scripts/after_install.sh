@@ -1,4 +1,6 @@
 #!/bin/bash
 
-sudo mkdir /home/ubuntu/nodejs
-sudo cd /home/ubuntu/nodejs
+mkdir /home/ubuntu/nodejs
+cd /home/ubuntu/nodejs
+
+sudo npm install

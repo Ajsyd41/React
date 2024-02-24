@@ -15,7 +15,9 @@ pipeline
     {
       steps {
          script{
+          echo "$WORKSPACE"
 		    	sh 'npm install'
+
         }
       }
     }
