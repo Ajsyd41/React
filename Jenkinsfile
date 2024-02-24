@@ -43,6 +43,11 @@ pipeline
            sh "aws deploy push --application-name my-devsecops-test --s3-location s3://codedeploybucketnew/${BUILD_NUMBER}.zip --source ./build"
           }
         }
+      stage('Deploy') {
+          steps {
+           sh "aws deploy create-deployment --application-name my-devsecops-test --deployment-group-name my-devsecops-deployment --s3-location bucket=codedeploybucketnew,bundleType=zip,key=${BUILD_NUMBER}"
+          }
+        }
 		
 // 	 stage('Sonar Analysis'){
 //         steps{
