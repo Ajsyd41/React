@@ -9,6 +9,14 @@ pipeline
    }
 
   stages { 
+  
+   stage('Install Dependencies'){
+        steps{
+            script{
+                sh 'apk add --update --no-cache aws-cli jq'
+            }
+        }
+    }
 
     
     stage('Npm install')
@@ -21,22 +29,19 @@ pipeline
         }
       }
     }
-    stage('Build')
-    {
-      steps {
-         script{
-		       build job: 'AutoTriggerBuildJob', parameters: [string(name: 'WORKSPACE', value: '{env.WORKSPACE}')]
-        }
-      }
-    }
-
    
-    // stage('Unit Test') {
+    stage('Npm Build') {
 
-    //       steps {
-    //        sh 'npm run test'
-    //       }
-    //     }
+          steps {
+           sh 'npm run test'
+          }
+        }
+
+      stage('Npm Build') {
+          steps {
+           sh 'aws deploy push --application-name my-devsecops-test --s3-location s3://codedeploybucketnew.zip --source ./build'
+          }
+        }
 		
 // 	 stage('Sonar Analysis'){
 //         steps{
