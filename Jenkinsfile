@@ -34,6 +34,7 @@ pipeline
 
           steps {
            sh 'npm run build'
+           sh 'cp ./appspec.yml ./build/'
           }
         }
 
