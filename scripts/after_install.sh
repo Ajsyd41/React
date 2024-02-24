@@ -1,5 +1,4 @@
 #!/bin/bash
 
-cd /var/www/html
-
-sudo npm install
+sudo mkdir /home/ubuntu/nodejs
+sudo cd /home/ubuntu/nodejs

@@ -15,7 +15,3 @@ hooks:
     - location: scripts/after_install.sh
       timeout: 300
       runas: ubuntu
-  ApplicationStart:
-    - location: scripts/application_start.sh
-      timeout: 300
-      runas: ubuntu

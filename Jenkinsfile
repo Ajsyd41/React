@@ -15,11 +15,20 @@ pipeline
     {
       steps {
          script{
-		    	// sh 'npm install'
-          build 'anotherjob'
+		    	sh 'npm install'
         }
       }
     }
+    stage('Build')
+    {
+      steps {
+         script{
+		       build 'anotherjob'
+        }
+      }
+    }
+
+   
     // stage('Unit Test') {
 
     //       steps {
