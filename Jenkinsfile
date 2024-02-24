@@ -2,7 +2,7 @@ pipeline
  {
    agent {
           docker {
-            image 'timbru31/java-node:17-jre-18'
+            image 'timbru31/java-node:17-alpine-jre-18'
             args '-p 3000:3000 -u 0:0 --privileged'
 			      reuseNode true
         }
